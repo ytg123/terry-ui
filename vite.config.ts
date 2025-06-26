@@ -1,13 +1,14 @@
 import legacy from "@vitejs/plugin-legacy";
 import react from "@vitejs/plugin-react";
+import path from "path";
 import { fileURLToPath } from "url";
 import { defineConfig } from "vite";
-import path from "path";
-import dts from 'vite-plugin-dts';
+import dts from "vite-plugin-dts";
+
 const isDebug = process.env.NODE_ENV === "development";
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: isDebug ?  [legacy(), react()] : [ react(),dts()],
+  plugins: isDebug ? [legacy(), react()] : [react(), dts()],
   resolve: {
     alias: {
       // for TypeScript path alias import like : @/x/y/z
@@ -25,9 +26,9 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/components/index.tsx'),
+      entry: path.resolve(__dirname, "src/components/index.tsx"),
       name: "terry-ui",
-      fileName: (format) => `terry-ui.${format}.js`,
+      fileName: format => `terry-ui.${format}.js`,
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
@@ -39,8 +40,8 @@ export default defineConfig({
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
-        }
-      }
-    }
+        },
+      },
+    },
   },
 });
